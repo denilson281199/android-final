@@ -12,7 +12,7 @@ fullscreen = 0
 [buildozer]
 log_level = 2
 
-# Android
+# Android specific
 android.api = 30
 android.minapi = 21
 android.ndk = 23b
