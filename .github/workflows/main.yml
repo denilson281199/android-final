@@ -6,7 +6,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Build with Buildozer
-        # Troka 'ArtemSerebriakov' ba 'artemserebriakov' (letra ki'ik hotu)
         uses: artemserebriakov/buildozer-action@v1.4.1
         with:
           buildozer_version: master
