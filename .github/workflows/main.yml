@@ -32,15 +32,15 @@ jobs:
             cmake \
             libffi-dev \
             libssl-dev \
-            wget
+            wget \
+            curl
 
       - name: Install Cython
         run: |
           pip install --user cython
 
-      - name: Build with Buildozer
-        run: |
-          pip install --user buildozer
-          export PATH=$PATH:~/.local/bin
-          buildozer init
-          buildozer android debug
+      - name: Build with Buildozer (Verbose)
+        uses: artemserebriakov/buildozer-action@v1.4.1
+        with:
+          buildozer_version: master
+          command: buildozer -v android debug
